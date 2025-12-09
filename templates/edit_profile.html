@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/edit_profile_{{ session.get('theme', 'default') }}.css">
+
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    {% include 'sidebar.html' %}
+<div class="edit-profile-container">
+    <h1>Edit Profile</h1><br>
+
+    <div class="profile-picture-container">
+        <img src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture" class="profile-picture">
+        <form action="{{ url_for('update_profile') }}" method="POST" enctype="multipart/form-data">
+            <label for="file-upload" class="upload-btn">Upload New Picture</label>
+            <input type="file" name="profile_picture" id="file-upload" accept="image/*">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div class="bio-container">
+        <form action="{{ url_for('edit_profile') }}" method="POST">
+            <label id="m" for="bio">Bio:</label>
+            <textarea name="bio" id="bio" rows="4" placeholder="Tell something about yourself">{{ user[4] if user else '' }}</textarea>
+            <button type="submit" name="update_bio">Save Bio</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/sidebar_{{ session.get('theme', 'default') }}.css">
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    <div class="sidebar">
+        <a href="/home" class="icon-link">
+            <img class="p" src="/static/uploads/bee.jpg" alt="Bee Logo">
+            <span class="oi">BEE</span>
+            <p class="a">Click here to go home</p>
+        </a>
+        <a href="/home" class="icon-link" data-voice-command="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="/messages" class="icon-link" data-voice-command="messages">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+        </a>
+        <a href="/settings" class="icon-link" data-voice-command="settings">
+            <i class="fas fa-cogs"></i>
+            <span>Settings</span>
+        </a>
+        <a id="voice-assistant" class="icon-link">
+            <i class="fas fa-microphone"></i>
+            <span>Voice Assistant</span>
+            <span id="voice-status" class="voice-status-inline">Click to start</span>
+        </a>
+        <a href="/search" class="icon-link" data-voice-command="search">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </a>
+        <a href="/post" class="icon-link" data-voice-command="post">
+            <i class="fas fa-plus"></i>
+            <span>Post</span>
+        </a>
+        <a href="/notifications" class="icon-link" data-voice-command="notifications">
+            <i class="fas fa-bell"></i>
+            <span>Notifications</span>
+            <span id="notification-count" class="notification-count">0</span>
+        </a>
+        <a href="/profile" class="icon-link" data-voice-command="profile">
+            <i class="fas fa-user-circle"></i>
+            <span>Profile</span>
+        </a>
+        <a href="/logout" class="icon-link" data-voice-command="logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <div id="recognized-text" class="recognized-text"></div>
+    <div id="message-box1" class="message-box1"></div>
+
+    <script src="/static/sidebar.js"></script>
+    <script src="/static/logout.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --honey-gold: #fbb034;
+    --honey-dark: #f79e1b;
+    --honey-light: #fcd25c;
+    --honey-accent: #fff4d4;
+    --honey-bg: #fffbf2;
+    --honey-container: #fff9e6;
+    --honey-input: #ffffff;
+    --honey-border: #f4c460;
+    --text-primary: #4a3000;
+    --text-secondary: #755618;
+    --shadow-color: rgba(251, 176, 52, 0.15);
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--honey-bg);
+    color: var(--text-primary);
+    margin-left: 260px;
+}
+
+.edit-profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--honey-container);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    border: 1px solid var(--honey-border);
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: var(--honey-dark);
+}
+
+.profile-picture-container {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: var(--honey-input);
+    border-radius: 12px;
+    border: 1px solid var(--honey-border);
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid var(--honey-gold);
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.upload-btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--honey-gold);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background-color: var(--honey-dark);
+    transform: translateY(-2px);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+button[type="submit"] {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--honey-gold);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--honey-dark);
+    transform: translateY(-2px);
+}
+
+.bio-container {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: var(--honey-input);
+    border-radius: 12px;
+    border: 1px solid var(--honey-border);
+}
+
+#m {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--honey-dark);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--honey-border);
+    border-radius: 8px;
+    background: var(--honey-input);
+    color: var(--text-primary);
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--honey-gold);
+    box-shadow: 0 0 0 2px rgba(251, 176, 52, 0.1);
+}
+
+textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+form {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        margin-left: 0;
+    }
+
+    .edit-profile-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .profile-picture {
+        width: 150px;
+        height: 150px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css">
+    
+    {% if session.get('theme') == 'light' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='light.css') }}">
+    {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='default.css') }}">
+    {% endif %}
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

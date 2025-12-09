@@ -1,0 +1,80 @@
+.modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(241, 224, 198, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.modal-content {
+    background-color: #fff;
+    color: #3c1e1b;
+    padding: 25px;
+    border-radius: 10px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s ease-out;
+}
+
+.modal-buttons {
+    margin-top: 25px;
+}
+
+.confirm-button, .cancel-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 1px solid #F5C700;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+}
+
+.confirm-button {
+    background-color: #F5C700;
+    color: white;
+}
+
+.cancel-button {
+    background-color: #D7CCC8;
+    color: #3c1e1b;
+}
+
+.confirm-button:hover {
+    background-color: #F8B700;
+    transform: scale(1.05);
+}
+
+.cancel-button:hover {
+    background-color: #F1E0C6;
+    color: #3c1e1b;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

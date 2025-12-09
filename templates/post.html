@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/post_{{ session.get('theme', 'default') }}.css">
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    {% include 'sidebar.html' %}
+
+    <div class="post-container">
+        <h1>Create a Post</h1>
+
+        <form action="{{ url_for('post_content') }}" method="POST" enctype="multipart/form-data" onsubmit="showSuccessPopup(event)">
+            <input type="hidden" name="username" value="{{ session['username'] }}">
+            <div class="textarea-wrapper">
+                <textarea name="content" placeholder="What's on your mind?" ></textarea>
+            </div>
+
+            <div class="upload-section">
+                <div class="upload-btn-group">
+                    <label for="photo-upload" class="upload-btn">
+                        <i class="fas fa-image"></i> Upload Photo
+                    </label>
+                    <input type="file" name="photo" id="photo-upload" accept="image/*" onchange="previewMedia(this, 'photo')">
+                    
+                    <label for="video-upload" class="upload-btn">
+                        <i class="fas fa-video"></i> Upload Video
+                    </label>
+                    <input type="file" name="video" id="video-upload" accept="video/*" onchange="previewMedia(this, 'video')">
+                </div>
+
+                <div class="preview-section">
+                    <div id="photo-preview" class="media-preview"></div>
+                    <div id="video-preview" class="media-preview"></div>
+                </div>
+            </div>
+
+            <button type="submit" class="post-btn">
+                <i class="fas fa-paper-plane"></i> Post
+            </button>
+        </form>
+
+        <div class="posts">
+            {% for post in posts %}
+                <div class="post">
+                    <div class="post-header">
+                        <strong>{{ post[1] }}</strong>
+                    </div>
+                    <div class="post-content">
+                        {{ post[2] }}
+                    </div>
+
+                    {% if post[3] %}
+                        <div class="post-media">
+                            <img src="{{ url_for('static', filename='uploads/' + post[3]) }}" alt="Post Image" class="post-image">
+                        </div>
+                    {% endif %}
+
+                    {% if post[4] %}
+                        <div class="post-media">
+                            <video controls class="post-video">
+                                <source src="{{ url_for('static', filename='uploads/' + post[4]) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    {% endif %}
+
+                    <div class="post-timestamp">
+                        {{ post[5] }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div id="success-popup" class="popup">
+        <div class="popup-content">
+            <p>Post successfully created!</p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <script src="/static/post.js"></script>
+
+
+
+</body>
+</html>

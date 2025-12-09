@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user['username'] }}'s Hive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/user_{{ session.get('theme', 'default') }}.css">
+    
+</head>
+<body>
+    {% include 'sidebar.html' %}
+
+    <!-- Animated Bees with Wings -->
+    <div class="bee" style="animation-delay: 0s">
+        <div class="bee-wing-left"></div>
+        <div class="bee-wing-right"></div>
+    </div>
+    <div class="bee" style="animation-delay: -5s">
+        <div class="bee-wing-left"></div>
+        <div class="bee-wing-right"></div>
+    </div>
+    <div class="bee" style="animation-delay: -10s">
+        <div class="bee-wing-left"></div>
+        <div class="bee-wing-right"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Followers Modal -->
+    <div id="followers-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Followers</h2>
+            <div id="followers-list"></div>
+        </div>
+    </div>
+
+    <!-- Following Modal -->
+    <div id="following-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Following</h2>
+            <div id="following-list"></div>
+        </div>
+    </div>
+
+    <main class="profile-container">
+        <section class="profile-header">
+            <div class="profile-cover"></div>
+            <div class="profile-info">
+                <div class="profile-picture-container">
+                    <img src="{{ url_for('static', filename='uploads/' + user['profile_picture']) }}" 
+                         alt="Profile Picture" 
+                         class="profile-picture"
+                         onerror="this.src='{{ url_for('static', filename='uploads/d1.jpg') }}'">
+                </div>
+                <div class="profile-details">
+                    <h1 class="profile-username">{{ user['username'] }}</h1>
+                    <p class="profile-bio">{{ user['bio'] }}</p>
+                    <div class="profile-stats">
+                        <div class="stat" data-type="followers">
+                            <span class="stat-value">{{ user['followers'] }}</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat" data-type="following">
+                            <span class="stat-value">{{ user['following'] }}</span>
+                            <span class="stat-label">Following</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">{{ posts|length }}</span>
+                            <span class="stat-label">Posts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if user['username'] != session['username'] %}
+            <div class="profile-actions">
+                <form id="follow-form" action="{{ url_for('follow_user', username=user['username']) }}" method="POST" style="flex: 1;">
+                    <button type="submit" class="btn follow-btn {% if user['is_following'] %}following{% endif %}" style="width: 100%;">
+                        <i class="fas {% if user['is_following'] %}fa-user-minus{% else %}fa-user-plus{% endif %}"></i>
+                        {{ 'Unfollow' if user['is_following'] else 'Follow' }}
+                    </button>
+                </form>
+                <form method="POST" action="{{ url_for('message_user', username=user['username']) }}" style="flex: 1;">
+                    <button type="submit" class="btn message-btn" style="width: 100%;">
+                        <i class="fas fa-envelope"></i>
+                        Message
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="posts-section">
+            <h2 class="section-title">Posts</h2>
+            
+            {% if posts %}
+            <div class="posts-list">
+                {% for post in posts %}
+                <div class="post">
+                    <div class="post-header">
+                        <img src="{{ url_for('static', filename='uploads/' + user['profile_picture']) }}" 
+                             alt="Profile Picture" 
+                             class="profile-pic"
+                             style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                        <span class="username">{{ user['username'] }}</span>
+                        <span style="margin-left: 8px;">Posted</span>
+                    </div>
+
+                    <div class="username-caption">
+                        <span class="caption">{{ post.content }}</span>
+                    </div>
+
+                    <div class="post-content">
+                        {% if post.photo_url %}
+                            <img src="{{ url_for('static', filename='uploads/' + post.photo_url) }}" 
+                                 alt="Post Image"
+                                 loading="lazy"
+                                 onerror="this.onerror=null; this.src='{{ url_for('static', filename='uploads/default-post.jpg') }}'">
+                        {% elif post.video_url %}
+                            <video controls>
+                                <source src="{{ url_for('static', filename='uploads/' + post.video_url) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% endif %}
+                    </div><br>
+
+                    <div class="interaction-section">
+                        <div class="heart-container">
+                            <button class="like-button {% if post.is_liked %}liked{% endif %}" data-post-id="{{ post.post_id }}">
+                                <i class="heart-icon {% if post.is_liked %}fas{% else %}far{% endif %} fa-heart"></i>
+                                <span class="like-count" id="like-count-{{ post.post_id }}">{{ post.like_count }}</span>
+                            </button>
+                        </div>
+                        <div class="comment-container">
+                            <button class="comment-button" data-post-id="{{ post.post_id }}">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="post-timestamp">{{ post.timestamp }}</div><br>
+
+                    <!-- Comment Section -->
+                    <div class="comment-section" id="comment-section-{{ post.post_id }}" style="display: none;">
+                        <div class="comments-list" id="comments-list-{{ post.post_id }}"></div>
+                        <div class="comment-input">
+                            <input type="text" class="comment-text" placeholder="Add a comment..." data-post-id="{{ post.post_id }}">
+                            <button class="comment-submit" data-post-id="{{ post.post_id }}">Post</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="no-posts">
+                <i class="fas fa-bee"></i>
+                <p>No honey in this hive yet!</p>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <script src="/static/users.js"></script>
+    
+</body>
+</html>

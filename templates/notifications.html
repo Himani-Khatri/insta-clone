@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="/static/notifications_{{ session.get('theme', 'default') }}.css">
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    {% include 'sidebar.html' %}
+    <div class="d">
+        <h1>Notifications</h1>
+
+        {% if notifications %}
+            <ul>
+                {% set is_first_unread = True %}
+                {% for notification in notifications %}
+                    <li>
+                        <div class="notification">
+                            {% if notification[1] == 'follow' %}
+                                <a href="{{ url_for('user_profile', username=notification[2]) }}" class="notification-link">
+                                    <img src="{{ url_for('static', filename='uploads/' + (notification[6] if notification[6] else 'd1.jpg')) }}" alt="Profile Picture" class="profile-picture">
+                                    <div class="notification-content">
+                                        <strong class="{{ 'unread-notification' if notification[5] == 0 else '' }}">{{ notification[2] }}</strong> started following you.
+                                    </div>
+                                </a>
+
+                            {% elif notification[1] == 'unfollow' %}
+                                <a href="{{ url_for('user_profile', username=notification[2]) }}" class="notification-link">
+                                    <img src="{{ url_for('static', filename='uploads/' + (notification[6] if notification[6] else 'd1.jpg')) }}" alt="Profile Picture" class="profile-picture">
+                                    <div class="notification-content">
+                                        <strong class="{{ 'unread-notification' if notification[5] == 0 else '' }}">{{ notification[2] }}</strong> unfollowed you.
+                                    </div>
+                                </a>
+
+                            {% elif notification[1] == 'message' %}
+                                <a href="{{ url_for('message_user', username=notification[2]) }}" class="notification-link">
+                                    <img src="{{ url_for('static', filename='uploads/' + (notification[6] if notification[6] else 'd1.jpg')) }}" alt="Profile Picture" class="profile-picture">
+                                    <div class="notification-content">
+                                        <strong class="{{ 'unread-notification' if notification[5] == 0 else '' }}">{{ notification[3] }}</strong>
+                                    </div>
+                                </a>
+
+                            {% elif notification[1] == 'like' %}
+                                <a href="#" class="notification-link">
+                                    <img src="{{ url_for('static', filename='uploads/' + (notification[6] if notification[6] else 'd1.jpg')) }}" alt="Profile Picture" class="profile-picture">
+                                    <div class="notification-content">
+                                        <strong class="{{ 'unread-notification' if notification[5] == 0 else '' }}">{{ notification[2] }}</strong> liked your post.
+                                    </div>
+                                </a>
+
+                            {% elif notification[1] == 'comment' %}
+                                <a href="#" class="notification-link">
+                                    <img src="{{ url_for('static', filename='uploads/' + (notification[6] if notification[6] else 'd1.jpg')) }}" alt="Profile Picture" class="profile-picture">
+                                    <div class="notification-content">
+                                        <strong class="{{ 'unread-notification' if notification[5] == 0 else '' }}"></strong> {{ notification[3] }}
+                                    </div>
+                                </a>
+
+                            {% elif notification[1] == 'reply' %}
+                                <a href="#" class="notification-link">
+                                    <img src="{{ url_for('static', filename='uploads/' + (notification[6] if notification[6] else 'd1.jpg')) }}" alt="Profile Picture" class="profile-picture">
+                                    <div class="notification-content">
+                                        <strong class="{{ 'unread-notification' if notification[5] == 0 else '' }}"></strong>{{ notification[3] }}
+                                    </div>
+                                </a>
+
+                            {% endif %}
+
+                            {% if notification[5] == 0 and is_first_unread %}
+                                <div class="red-dot"></div>
+                                {% set is_first_unread = False %}
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No notifications available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,782 @@
+/* General Styles for All Elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    background-color: #1E1E1E; /* Dark charcoal background */
+    color: #E0E0E0; /* Light gray text for readability */
+    font-family: 'Ramaraja', serif;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    width: 100%;
+}
+
+/* Suggested Users Sidebar */
+.suggested-users {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: #2C2C2C; /* Dark gray sidebar */
+    padding: 20px;
+    box-shadow: -2px 0 8px rgba(255, 255, 255, 0.5);
+    color: #E0E0E0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.suggested-users h2 {
+    margin-bottom: 20px;
+    color: #FFC107; /* Gold header */
+    font-size: 22px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.suggested-users ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggested-user {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #3A3A3A; /* Darker gray background */
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.suggested-user:hover {
+    background-color: #555555; /* Slightly lighter gray on hover */
+}
+
+.suggested-user .suggested-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+    border: 2px solid #FFC107; /* Gold border */
+}
+
+.suggested-user .username {
+    flex-grow: 1;
+    color: #E0E0E0;
+    font-weight: 500;
+}
+
+.suggested-user button {
+    margin-left: 10px;
+    padding: 6px 12px;
+    background-color: #FFC107; /* Gold button */
+    color: #1E1E1E; /* Dark text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.suggested-user button:hover {
+    background-color: #E1A300; /* Darker gold */
+    transform: scale(1.05);
+}
+
+.like-icon {
+    cursor: pointer;
+    color: #D1A100; /* Soft gold */
+    transition: color 0.3s ease;
+}
+
+.like-icon.liked {
+    color: #FFC107; /* Gold when liked */
+}
+
+/* Main Home Container */
+.home-container {
+    margin-left: 300px;
+    margin-right: 300px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100%;
+}
+
+.newsfeed {
+    background-color: #2C2C2C; /* Dark gray */
+    padding: 20px; /* Reduced padding */
+    border-radius: 10px;
+    width: 85%; /* Increased width */
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(181, 181, 181, 0.365);
+    margin-left: 20px; /* Shifted more to the left */
+    height: 1%; /* Reduced height */
+}
+
+
+/* No Posts Styling */
+.no-posts {
+    text-align: center;
+    color: #E0E0E0;
+    font-size: 24px;
+    font-weight: 600;
+    background-color: #333333; /* Darker gray */
+    padding: 80px 60px;
+    margin-top: 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 100px;
+    margin: 85px;
+}
+
+/* Post Styling */
+.post {
+    background-color: #3A3A3A; /* Darker gray */
+    padding: 18px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    animation: postFadeIn 0.6s ease-in-out;
+    text-align: justify;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #FFC107; /* Gold border */
+}
+
+.post-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFC107; /* Gold text */
+}
+
+.post-timestamp {
+    font-size: 14px;
+    color: #B0B0B0; /* Light gray */
+}
+
+.post-content {
+    font-size: 15px;
+    color: #E0E0E0;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.post-content img,
+.post-content video {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.post-footer {
+    margin-top: 15px;
+    font-size: 12px;
+    color: #B0B0B0;
+}
+
+#pro {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+#para {
+    font-size: 12px;
+    color: #B0B0B0;
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes postFadeIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+/* Charcoal Bee Lighter Yellow Theme */
+:root {
+    --charcoal-dark: #222; /* Dark charcoal */
+    --charcoal-light: #333; /* Lighter charcoal */
+    --bee-light-yellow: #ffd700; /* Bright but lighter Bee yellow */
+    --bee-dark-yellow: #e0c000; /* Softer dark yellow */
+    --bee-red: #ff4d4d; /* Red for delete buttons */
+    --bee-dark-red: #cc0000; /* Darker red for delete hover */
+    --gray: #aaa; /* Lighter gray for some text */
+}
+
+/* General comment section styles */
+.comment-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--charcoal-dark); /* Dark charcoal background */
+    border-radius: 8px;
+    border: 1px solid var(--bee-light-yellow); /* Lighter and brighter Bee yellow */
+}
+
+/* Comment and reply forms */
+.comment-form, .reply-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.comment-form input, .reply-form input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--bee-light-yellow); /* Lighter Bee yellow */
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #222; /* Dark input field */
+    color: #fff; /* White text */
+}
+
+.comment-form button, .reply-form button {
+    padding: 0.5rem 1rem;
+    background-color: var(--bee-light-yellow); /* Bright but lighter Bee yellow */
+    border: none;
+    border-radius: 4px;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comment-form button:hover, .reply-form button:hover {
+    background-color: var(--bee-dark-yellow); /* Softer dark yellow */
+}
+
+/* Comment and reply lists */
+.comments-list, .replies-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment, .reply {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    background-color: var(--charcoal-light); /* Dark charcoal background */
+    border-radius: 6px;
+    border: 1px solid var(--bee-light-yellow); /* Lighter Bee yellow */
+    position: relative;
+}
+
+.comment-username, .reply-username {
+    font-weight: 600;
+    color: var(--bee-light-yellow); /* Lighter Bee yellow for usernames */
+    margin-right: 0.5rem;
+}
+
+.comment-text, .reply-text {
+    color: #ccc; /* Light gray text */
+    font-size: 14px;
+}
+
+/* Delete buttons for comments and replies */
+.delete-comment, .delete-reply {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background-color: var(--bee-red); /* Red for delete buttons */
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 0.25rem 0.5rem;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-comment:hover, .delete-reply:hover {
+    background-color: var(--bee-dark-red); /* Darker red */
+}
+
+/* Reply container */
+.replies-container {
+    margin-left: 1.5rem;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--bee-light-yellow); /* Lighter Bee yellow */
+}
+
+/* Animation for New Comments and Replies */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.comment, .reply {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Adjusting the width of the reply input and button */
+.reply-form input, .reply-form button {
+    width: 70%; /* Adjust this value as needed */
+}
+
+.reply-form button {
+    width: auto; /* Ensure button size adjusts according to content */
+    padding: 0.5rem 1rem;
+}
+
+/* Interaction section (likes, heart buttons, etc.) */
+.interaction-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Lighter border */
+    margin-left: -10px;
+}
+
+/* Heart button and animation */
+.heart-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+    border-radius: 50%;
+}
+
+.like-button.clicking {
+    transform: scale(0.9);
+}
+
+.heart-icon {
+    font-size: 24px;
+    color: var(--gray); /* Gray for normal state */
+    transition: all 0.3s ease;
+}
+
+.like-button.liked .heart-icon {
+    color: #ff3b30; /* Red when liked */
+}
+
+.heart-icon.pop {
+    animation: pop 0.3s ease;
+}
+
+.like-count {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--gray); /* Gray for count */
+    min-width: 20px;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Home feed and post styles */
+.home-container {
+    position: relative;
+    min-height: calc(100vh - 60px);
+}
+
+.newsfeed {
+    height: 100%;
+}
+
+.newsfeed h1 {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Post header (profile picture and username) */
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+}
+
+.profile-link:hover {
+    opacity: 0.8;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin-left: -10px;
+}
+
+.username:hover {
+    text-decoration: underline;
+}
+:root {
+    --background-color: #121212; /* Charcoal Black */
+    --border-color: #2a2a2a; /* Dark Gray */
+    --text-color: #e3e3e3; /* Light Gray */
+    --secondary-text: #a8a8a8; /* Muted Gray */
+    --primary-color: #f1c40f; /* Bee Yellow */
+    --primary-hover: #d4ac0d; /* Darker Bee Yellow */
+    --danger-color: #e74c3c; /* Soft Red */
+    --input-bg: #1a1a1a; /* Slightly Lighter Charcoal */
+    --comment-bg: #191919; /* Deep Charcoal */
+    --reply-bg: #161616; /* Even Darker Charcoal */
+}
+
+.hidden {
+    display: none;
+}
+
+/* Comment Section Styles */
+.comment-section {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.comment-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.comment-form button {
+    padding: 8px 16px;
+    background: var(--primary-color);
+    color: black;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.comment-form button:hover {
+    background: var(--primary-hover);
+}
+
+.comment-count {
+    color: var(--secondary-text);
+}
+
+.comment-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    font-size: 16px;
+    transition: color 0.3s ease;
+    margin-left: -10px;
+}
+
+.comment-button:hover {
+    color: var(--primary-color);
+}
+
+.comment-button i {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+/* Comment Content Styles */
+.comment-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    background: var(--comment-bg);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.comment-profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-details {
+    flex-grow: 1;
+}
+
+.comment-username {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-right: 8px;
+}
+
+.comment-text {
+    color: var(--text-color);
+}
+
+.comment-timestamp {
+    font-size: 0.8em;
+    color: var(--secondary-text);
+    display: block;
+    margin-top: 4px;
+}
+
+/* Delete Button Styles */
+.delete-comment, .delete-reply {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.delete-comment:hover, .delete-reply:hover {
+    opacity: 1;
+}
+
+/* Reply Styles */
+.reply-toggle-button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.9em;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.reply-toggle-button:hover {
+    text-decoration: underline;
+}
+
+.reply-form {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.reply-form input {
+    flex: 1;
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.9em;
+}
+
+.reply-form button {
+    padding: 6px 12px;
+    background: var(--primary-color);
+    color: black;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.replies-container {
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+.reply-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px;
+    background: var(--reply-bg);
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+
+.reply-profile-pic {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reply-details {
+    flex-grow: 1;
+}
+
+.reply-username {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.9em;
+}
+
+.reply-text {
+    color: var(--text-color);
+    font-size: 0.9em;
+}
+
+.reply-timestamp {
+    font-size: 0.8em;
+    color: var(--secondary-text);
+    display: block;
+    margin-top: 2px;
+}
+
+/* Popup Styles */
+.popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    animation: slideDown 0.3s ease-out;
+    color: black;
+    font-weight: 500;
+}
+
+.popup.success {
+    background-color: #27ae60; /* Dark Green */
+}
+
+.popup.error {
+    background-color: #c0392b; /* Dark Red */
+}
+
+.popup.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translate(-50%, -20px);
+    }
+}
+.comment-section {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    display: none; /* Hide the comment section by default */
+}
+
+.comment-section.visible {
+    display: block; /* Show the comment section when this class is added */
+}
+.comment-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-color); /* Default color */
+    font-size: 16px;
+    transition: color 0.3s ease;
+    margin-left: -10px; /* Adjust as needed */
+}
+
+.comment-button:hover {
+    color: var(--primary-hover); /* Hover color */
+}
+
+.comment-button i {
+    font-size: 24px; /* Icon size */
+    margin-right: 5px; /* Space between icon and text */
+    transition: transform 0.2s ease; /* Smooth hover effect */
+}
+
+.comment-button:hover i {
+    transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+

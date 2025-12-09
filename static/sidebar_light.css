@@ -1,0 +1,319 @@
+/* General Styles for All Elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #fff9e0; /* Light cream background for sidebar */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1); /* Soft, light shadow for depth */
+    font-family: 'Playfair Display', serif; /* Playfair Display font */
+}
+
+/* Sidebar Icon Links */
+.sidebar .icon-link {
+    color: #6B4F3C; /* Soft brown text */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    position: relative; /* Needed for positioning the icon during hover */
+}
+
+.sidebar .icon-link:hover {
+    background-color: #F8E1A1; /* Light honey yellow hover */
+}
+
+.sidebar .icon-link i {
+    margin-right: 10px;
+    color: #F5C700; /* Honey yellow for icons */
+    transition: transform 0.3s ease; /* Smooth scale transition */
+}
+
+.sidebar .icon-link:hover i {
+    transform: scale(1.5); /* Make the icon bigger on hover */
+}
+
+/* Profile and Icon Links Styling */
+.p {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.a {
+    font-size: 10px;
+    color: #D6BDA3; /* Soft taupe for small text */
+}
+
+.icon-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+
+/* Voice Status Styling */
+.voice-status-inline {
+    font-size: 12px;
+    color: #666;
+    margin-left: 10px;
+}
+
+/* Recognized Text Styling */
+.recognized-text {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 300px;
+    word-wrap: break-word;
+    z-index: 1000;
+    display: none;
+}
+
+/* Message Box Styling */
+.message-box1 {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    display: none;
+}
+
+.message-box1.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Voice Assistant Active State */
+#voice-assistant.active {
+    background-color: #dc3545;
+    animation: pulse 1.5s infinite;
+}
+
+#voice-assistant.active i {
+    color: white;
+}
+
+
+
+/* User Card Styling */
+.user-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.user-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.user-card h3 {
+    margin: 0;
+    color: #333;
+}
+
+.user-card p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.user-card button {
+    margin-left: auto;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.user-card button:hover {
+    background: #0056b3;
+}
+
+/* Animation for Pulsing Effect */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+/* Icon Link Cursor Style */
+.icon-link{
+    cursor: pointer;
+}
+
+
+.notification-count {
+    position: absolute;
+    top: 0px;
+    right: 218px;
+    background-color: #ffcc00;
+    color: rgb(0, 0, 0);
+    border-radius: 50%;
+    padding: 0;
+    font-size: 10px;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.notification-count.show {
+    visibility: visible; /* Show when there's a notification */
+}
+
+.icon-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.icon-link:hover .notification-count {
+    position: absolute;
+}
+.search-result-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9;
+    border: 1px solid #ffcc00;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+    z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.search-result-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-result-content h3 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.user-result {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.user-result:last-child {
+    border-bottom: none;
+}
+
+.conversation-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+    z-index: 1000;
+}
+
+.conversation-bubble {
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 20px;
+    max-width: 80%;
+    animation: bubbleAppear 0.3s ease;
+}
+
+.conversation-bubble.user {
+    background: #ffcc00;
+    color: #222;
+    margin-left: auto;
+}
+
+.conversation-bubble.assistant {
+    background: #eee;
+    color: #222;
+    margin-right: auto;
+}
+
+@keyframes bubbleAppear {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.user-result .profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ffcc00;
+}
+
+.user-result .username {
+    font-size: 16px;
+    color: #222;
+    flex-grow: 1;
+}
+
+.user-result button {
+    background-color: #ffcc00;
+    color: #222;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.user-result button:hover {
+    background-color: #ffd700;
+}

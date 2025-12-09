@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<scrip lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/home_{{ session.get('theme', 'default') }}.css">
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    {% include 'sidebar.html' %}
+    <div class="suggested-users">
+        <h2>Suggested Users</h2>
+        <ul>
+            {% for user in suggested_users %}
+            <li class="suggested-user">
+                <a href="/profile/{{ user.username }}">
+                    <img src="{{ url_for('static', filename='uploads/' + user.profile_picture) }}" alt="Profile Picture" class="suggested-profile-pic">
+                </a>
+                <a href="/profile/{{ user.username }}" class="username">{{ user.username }}</a>
+                <form id="follow-form" action="{{ url_for('follow_user', username=user['username']) }}" method="POST">
+                    <button type="submit" class="follow-button" id="follow-btn">
+                    </button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="home-container">
+        <div class="newsfeed">
+            <h1>NewsFeed</h1>
+            {% if posts %}
+                {% for post in posts %}
+                <div class="post">
+                    <!-- Post Header -->
+                    <div class="post-header">
+                        <a href="/profile/{{ post.username }}" class="profile-link">
+                            <img src="{{ url_for('static', filename='uploads/' + (post.profile_picture if post.profile_picture else 'd1.jpg')) }}" alt="Profile Picture" class="profile-pic">
+                            <span class="username">{{ post.username }}</span>
+                        </a>
+                        <span class="post-time" style="font-size: 10px; margin-left: 5px; margin-top: 3px; color: #9b9b9b;">Posted</span>
+                    </div>
+    
+                    <!-- Post Content -->
+                    <div class="post-content">
+                        <div class="caption">{{ post.content }}</div>
+                        {% if post.photo_url %}
+                            <img src="{{ url_for('static', filename='uploads/' + post.photo_url) }}" alt="Post Photo">
+                        {% endif %}
+                        {% if post.video_url %}
+                            <video controls>
+                                <source src="{{ url_for('static', filename='uploads/' + post.video_url) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% endif %}
+                    </div>
+    
+                     <!-- Interaction Section -->
+                     <div class="interaction-section">
+                        <div class="heart-container">
+                            <button class="like-button {% if post.is_liked %}liked{% endif %}" data-post-id="{{ post.post_id }}">
+                                <i class="heart-icon {% if post.is_liked %}fas{% else %}far{% endif %} fa-heart"></i>
+                                <span class="like-count" id="like-count-{{ post.post_id }}">{{ post.like_count|default(0) }}</span>
+                            </button>
+                            <button class="comment-button" data-post-id="{{ post.post_id }}">
+                                <i class="fas fa-comment"></i>
+                                <span class="comment-count" id="comment-count-{{ post.post_id }}">{{ post.comments|length|default(0) }}</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- Comment Section -->
+                    <div class="comment-section" id="comment-section-{{ post.post_id }}">
+                        <form class="comment-form" data-post-id="{{ post.post_id }}">
+                            <input type="text" placeholder="Add a comment..." required>
+                            <button type="submit">Post</button>
+                        </form>
+
+                        <div class="comments-container">
+                            <ul class="comments-list hidden" id="comments-list-{{ post.post_id }}">
+                                {% for comment in post.comments %}
+                                <li class="comment" data-comment-id="{{ comment.comment_id }}">
+                                    <div class="comment-content">
+                                        <a href="/profile/{{ comment.username }}">
+                                            <img src="{{ url_for('static', filename='uploads/' + (comment.profile_picture if comment.profile_picture else 'd1.jpg')) }}" alt="Profile Picture" class="comment-profile-pic">
+                                        </a>                                        <div class="comment-details">
+                                            <a href="/profile/{{ comment.username }}" class="comment-username">{{ comment.username }}</a>                                            <span class="comment-text">{{ comment.content }}</span>
+                                            <span class="comment-timestamp">{{ comment.timestamp }}</span>
+                                            <form class="reply-form hidden" data-comment-id="{{ comment.comment_id }}">
+                                                <input type="text" placeholder="Write a reply..." required>
+                                                <button type="submit">Reply</button>
+                                            </form>
+                                            
+                                            <!-- Replies container -->
+                                            <div class="replies-container">
+                                                <ul class="replies-list">
+                                                    {% for reply in comment.replies %}
+                                                    <li class="reply" data-reply-id="{{ reply.reply_id }}">
+                                                        <div class="reply-content">
+                                                            <a href="/profile/{{ reply.username }}">
+                                                                <img src="{{ url_for('static', filename='uploads/' + (reply.profile_picture if reply.profile_picture else 'd1.jpg')) }}" alt="Profile Picture" class="reply-profile-pic">
+                                                            </a>                                                            <div class="reply-details">
+                                                                <a href="/profile/{{ reply.username }}" class="reply-username">{{ reply.username }}</a>                                                                <span class="reply-text">{{ reply.content }}</span>
+                                                                <span class="reply-timestamp">{{ reply.timestamp }}</span>
+                                                            </div>
+                                                            {% if reply.username == session['username'] %}
+                                                            <button class="delete-reply" data-reply-id="{{ reply.reply_id }}">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                            {% endif %}
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        {% if comment.username == session['username'] %}
+                                        <button class="delete-comment" data-comment-id="{{ comment.comment_id }}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                  <br>  <div class="post-timestamp">{{ post.timestamp }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-posts">
+                    <p>No posts available</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="/static/home.js"></script>
+</body>
+</html>

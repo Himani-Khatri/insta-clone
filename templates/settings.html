@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="/static/settings_{{ session.get('theme', 'default') }}.css">
+    
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+
+    {% include 'sidebar.html' %}
+    <div class="settings-container">
+        <h1>Settings</h1>
+
+        <section class="settings-section">
+            <h3>Change Password</h3>
+            <form action="/change_password" method="POST">
+                <label for="current_password">Current Password:</label>
+                <input type="password" id="current_password" name="current_password" required>
+                <br>
+                <label for="new_password">New Password:</label><br>
+                <input type="password" id="new_password" name="new_password" required><br>
+
+                <label for="confirm_password">Confirm New Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+
+                <button type="submit">Change Password</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'password_error' %}
+                            <div class="message-box error">
+                                {{ message }}
+                            </div>
+                        {% elif category == 'password_success' %}
+                            <div class="message-box success">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </section>
+
+        <section class="settings-section">
+            <h3>Change Phone Number</h3>
+            <form action="/change_phone_number" method="POST">
+                <label for="phone_number">New Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" required>
+
+                <button type="submit">Update Phone Number</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'phone_error' %}
+                            <div class="message-box error">
+                                {{ message }}
+                            </div>
+                        {% elif category == 'phone_success' %}
+                            <div class="message-box success">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </section>
+
+        <section class="settings-section">
+            <h3>Change Theme</h3>
+            <form action="/change_background" method="POST">
+                <div>
+                    <button type="submit" name="theme" value="light" class="theme-btn light">Light Mode</button>
+                    <button type="submit" name="theme" value="default" class="theme-btn default">Default Mode</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="settings-section">
+            <br>  
+            <h3>Followers and Following</h3>
+
+            <button type="button" onclick="toggleFollowers()">View Followers</button>
+            <button type="button" onclick="toggleFollowing()">View Following</button>
+
+            <div id="followers-section" class="followers-following">
+                <h3>Your Followers:</h3>
+                <ul>
+                    {% if followers %}
+                        {% for follower in followers %}
+                            <li>{{ follower }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No followers yet.</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div id="following-section" class="followers-following">
+                <h3>Your Following:</h3>
+                <ul>
+                    {% if following %}
+                        {% for followee in following %}
+                            <li>{{ followee }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>You are not following anyone yet.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </section>
+
+        <section class="settings-section">
+            <br>   
+            <h3>Additional Settings</h3>
+            <li><a href="#" id="delete-account-link">Delete Account</a></li>
+
+            <div id="confirmation-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000;">
+                <h3>Are you sure you want to delete your account?</h3>
+                <p>This action cannot be undone. 😬</p>
+                
+                <input type="text" id="username-input" placeholder="Enter your username to confirm" style="padding: 10px; margin-bottom: 10px;">
+                
+                <button id="confirm-delete" style="background: red; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer;">Delete</button>
+                <button id="cancel-delete" style="background: gray; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+            </div>
+        
+            <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+        </section>
+
+        <script>
+             // Toggle Followers and Following visibility
+ function toggleFollowers() {
+    const followersSection = document.getElementById('followers-section');
+    followersSection.style.display = followersSection.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleFollowing() {
+    const followingSection = document.getElementById('following-section');
+    followingSection.style.display = followingSection.style.display === 'none' ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+        // Toggle Followers and Following visibility
+        function toggleFollowers() {
+            const followersSection = document.getElementById('followers-section');
+            followersSection.style.display = followersSection.style.display === 'none' ? 'block' : 'none';
+        }
+    
+        function toggleFollowing() {
+            const followingSection = document.getElementById('following-section');
+            followingSection.style.display = followingSection.style.display === 'none' ? 'block' : 'none';
+        }
+    
+        document.getElementById("delete-account-link").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.getElementById("confirmation-modal").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        });
+    
+        document.getElementById("cancel-delete").addEventListener("click", function () {
+            document.getElementById("confirmation-modal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        });
+    
+        document.getElementById("confirm-delete").addEventListener("click", async function () {
+            const username = document.getElementById("username-input").value;
+            const currentUsername = "{{ session.get('username') }}";
+    
+            if (!username) {
+                alert("Username is required to delete the account.");
+                return;
+            }
+    
+            if (username !== currentUsername) {
+                alert("You can only delete your own account.");
+                return;
+            }
+    
+            try {
+                const response = await fetch('/delete_account', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username }),
+                });
+    
+                const result = await response.json();
+                if (response.ok) {
+                    alert(result.message);
+                    window.location.href = '/';
+                } else {
+                    alert(result.error || 'Failed to delete the account.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An unexpected error occurred.');
+            }
+        });
+    
+        // Ensure the modal doesn't show on reload
+        document.getElementById("confirmation-modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    });
+        </script>
+
+</body>
+<script></script>
+<style>
+    /* Confirmation Modal Styles */
+#confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+}
+
+#confirmation-modal h3 {
+    margin-bottom: 10px;
+}
+
+#confirmation-modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#confirmation-modal button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#confirm-delete {
+    background: red;
+    color: white;
+}
+
+#cancel-delete {
+    background: gray;
+    color: white;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+</style>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/messages_{{ session.get('theme', 'default') }}.css">
+    <script src="/static/messages.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart/index.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.css">
+
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    {% include 'sidebar.html' %}
+    <div class="messages-container">
+        <div class="user-list">
+            <h3>Search Chats</h3><br>
+            <form action="{{ url_for('messages_page') }}" method="get">
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Search users to chat with..." class="search-bar">
+                
+            </form><br>
+        
+            <h3>Users that you follow</h3>
+<ul>
+    {% for user in following_users %}
+    <li>
+        <a href="{{ url_for('message_user', username=user['username']) }}">
+            <img src="{{ url_for('static', filename='uploads/' + (user['profile_picture'] or 'd1.jpg')) }}" alt="Profile Picture" class="profile-pic">
+            <span>{{ user['username'] }}</span>
+            
+            {% if user.get('new_message_count', 0) > 0 %}
+                <span class="new-message-count">{{ user['new_message_count'] }} new message{{ 's' if user['new_message_count'] > 1 else '' }}</span>
+            {% endif %}
+
+            {% if user.get('last_message') %}
+                <p class="last-message">{{ user['last_message'] }}</p>
+            {% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+        
+            
+
+
+        </div>
+        
+
+        <div class="chat-area">
+            {% if recipient %}
+            <h2>Chat with {{ recipient }}</h2>
+            <div class="chat-messages">
+                {% for message in messages %}
+                <div class="message-row {{ 'sent' if message.is_sent_by_user else 'received' }}">
+                    <div class="message-wrapper">
+                        {% if not message.is_sent_by_user %}
+                        <div class="profile-pic-container">
+                            <img src="{{ url_for('static', filename='uploads/' + (profiles[message.sender] if profiles[message.sender] else 'd1.jpg')) }}" 
+                                 alt="Profile Picture" 
+                                 class="profile-pic">
+                        </div>
+                        {% endif %}
+            
+                        <div class="message-content">
+                            <span class="message-sender">
+                                {{ 'You' if message.is_sent_by_user else message.sender }} sent:
+                            </span>
+            
+                            {% if message.media_type == 'audio' %}
+                                <audio controls>
+                                    <source src="{{ url_for('static', filename=message.media_path) }}" type="audio/webm">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            {% else %}
+                                <p>{{ message['content'] }}</p>
+                            {% endif %}
+            
+                            <span class="timestamp">{{ message['timestamp'] }}</span>
+                        </div>
+            
+                        {% if message.is_sent_by_user %}
+                        <div class="profile-pic-container">
+                            <img src="{{ url_for('static', filename='uploads/' + (profiles[message.sender] if profiles[message.sender] else 'd1.jpg')) }}" 
+                                 alt="Profile Picture" 
+                                 class="profile-pic">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+
+            <form id="chat-form" class="container" action="{{ url_for('message_user', username=recipient) }}" method="post">
+                <textarea class="z" name="message" placeholder="Type your message..." required></textarea>
+                <button type="button" id="bee-emoji-btn" class="beee">
+                    🐝
+                </button>
+                <button type="button" id="emoji-btn" class="emoji-btn">
+                    <i class="fas fa-smile"></i>
+                </button>
+                <div id="emoji-dropdown" class="emoji-dropdown">
+                    <button type="button" class="emoji-option" data-emoji="😂">😂</button>
+                    <button type="button" class="emoji-option" data-emoji="🤣">🤣</button>
+                    <button type="button" class="emoji-option" data-emoji="😅">😅</button>
+                    <button type="button" class="emoji-option" data-emoji="😎">😎</button>
+                    <button type="button" class="emoji-option" data-emoji="😊">😊</button>
+                    <button type="button" class="emoji-option" data-emoji="😍">😍</button>
+                    <button type="button" class="emoji-option" data-emoji="🥺">🥺</button>
+                    <button type="button" class="emoji-option" data-emoji="🤗">🤗</button>
+                    <button type="button" class="emoji-option" data-emoji="👍">👍</button>
+                    <button type="button" class="emoji-option" data-emoji="👎">👎</button>
+                    <button type="button" class="emoji-option" data-emoji="💀">💀</button>
+                    <button type="button" class="emoji-option" data-emoji="🥳">🥳</button>
+                    <button type="button" class="emoji-option" data-emoji="🤩">🤩</button>
+                    <button type="button" class="emoji-option" data-emoji="💪">💪</button>
+                    <button type="button" class="emoji-option" data-emoji="🙌">🙌</button>
+                    <button type="button" class="emoji-option" data-emoji="👏">👏</button>
+                    <button type="button" class="emoji-option" data-emoji="🤔">🤔</button>
+                    <button type="button" class="emoji-option" data-emoji="😜">😜</button>
+                    <button type="button" class="emoji-option" data-emoji="🥲">🥲</button>
+                    <button type="button" class="emoji-option" data-emoji="😡">😡</button>
+                    <button type="button" class="emoji-option" data-emoji="😭">😭</button>
+                    <button type="button" class="emoji-option" data-emoji="🫠">🫠</button>
+                    <button type="button" class="emoji-option" data-emoji="😏">😏</button>
+                    <button type="button" class="emoji-option" data-emoji="🥰">🥰</button>
+                    <button type="button" class="emoji-option" data-emoji="😳">😳</button>
+                    <button type="button" class="emoji-option" data-emoji="🤭">🤭</button>
+                    <button type="button" class="emoji-option" data-emoji="😋">😋</button>
+                    <button type="button" class="emoji-option" data-emoji="🤪">🤪</button>
+                    <button type="button" class="emoji-option" data-emoji="🤫">🤫</button>
+                    <button type="button" class="emoji-option" data-emoji="😤">😤</button>
+                    <button type="button" class="emoji-option" data-emoji="🙄">🙄</button>
+                    <button type="button" class="emoji-option" data-emoji="🥴">🥴</button>
+                    <button type="button" class="emoji-option" data-emoji="🤢">🤢</button>
+                    <button type="button" class="emoji-option" data-emoji="🤧">🤧</button>
+                    <button type="button" class="emoji-option" data-emoji="😷">😷</button>
+                    <button type="button" class="emoji-option" data-emoji="🫣">🫣</button>
+                    <button type="button" class="emoji-option" data-emoji="🫥">🫥</button>
+                    <button type="button" class="emoji-option" data-emoji="👀">👀</button>
+                    <button type="button" class="emoji-option" data-emoji="👅">👅</button>
+                    <button type="button" class="emoji-option" data-emoji="🦷">🦷</button>
+                    <button type="button" class="emoji-option" data-emoji="🦸‍♀️">🦸‍♀️</button>
+                    <button type="button" class="emoji-option" data-emoji="🦸‍♂️">🦸‍♂️</button>
+                </div>
+                <button type="button" id="record-btn" class="emoji-btn">
+                </button>
+                
+                
+                <button type="submit" id="p" class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            
+            {% else %}
+            <center><h2 class="select">Select a user to chat with</h2></center>
+            {% endif %}
+        </div>
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Users</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/search_{{ session.get('theme', 'default') }}.css">
+    <style>
+       
+    </style>
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    {% include 'sidebar.html' %}
+
+    <div class="home-container">
+        <div class="search-section">
+            <form method="POST" action="{{ url_for('search_page') }}">
+                <input class="s" type="text" name="search_query" placeholder="Search for a user" required>
+                <button class="s" type="submit">Search</button>
+            </form>
+
+            {% if users %}
+            <div class="search-results">
+                {% for user in users %}
+                    <div class="search-result">
+                        <a href="{{ url_for('user_profile', username=user['username']) }}" class="icon-link">
+                            <img class="profile-pic" src="{{ url_for('static', filename='uploads/' + (user['profile_picture'] if user['profile_picture'] else 'd1.jpg')) }}" alt="Profile Picture">
+                            <p class="username">{{ user['username'] }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <h2 class="section-title" style="color: #b3b1b1;">Explore</h2>
+        <div class="explore-grid">
+            {% for post in explore_posts %}
+                <div class="explore-item">
+                    <div class="user-info">
+                        <a href="{{ url_for('user_profile', username=post.username) }}">
+                            <img src="{{ url_for('static', filename='uploads/' + post.profile_picture) }}" alt="Profile picture">
+                        </a>
+                        <a href="{{ url_for('user_profile', username=post.username) }}">
+                            {{ post.username }}
+                        </a>
+                    </div>
+                    <div class="explore-media">
+                        {% if post.photo_url %}
+                            <img src="{{ url_for('static', filename='uploads/' + post.photo_url) }}" alt="Post image">
+                        {% elif post.video_url %}
+                            <video controls>
+                                <source src="{{ url_for('static', filename='uploads/' + post.video_url) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% endif %}
+                    </div>
+                    <div class="post-actions">
+                        <button class="like-btn {% if post.is_liked %}liked{% endif %}" 
+                                onclick="toggleLike(this, {{ post.post_id }})">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <span class="like-count">{{ post.like_count }} likes</span>
+                    </div>
+                    {% if post.content %}
+                        <div class="post-caption">
+                            <strong>{{ post.username }}</strong> {{ post.content }}
+                        </div>
+                    {% endif %}
+                    <div class="post-timestamp">
+                        {{ post.timestamp }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="/static/search.js"></script>
+</body>
+</html>

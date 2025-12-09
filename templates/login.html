@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bee - Login</title>
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/static/uploads/bee.jpg" alt="Bee Logo">
+        </div>
+        <h2>Welcome to Bee</h2>
+
+        {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/">
+            <div class="form-group">
+                <p for="username">Username:</p>
+                <input class="a" type="text" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <p for="password">Password:</p>
+                <input class="a" type="password" name="password" required>
+            </div>
+
+            <div class="form-group remember-me">
+                <input type="checkbox" name="remember_me" id="remember_me">
+                <span>Remember me</span>
+            </div>
+
+            <button type="submit">Login</button>
+            <p class="signup-option">Don't have an account? <a href="/signup">Sign Up</a></p>
+        </form>
+    </div>
+</body>
+</html>

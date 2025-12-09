@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+:root {
+    --honey-gold: #FFA500;
+    --light-yellow: #FFF8E1;
+    --bee-black: #333333;
+    --bee-stripe: #FFF8E1;
+    --hive-wood: #DEB887;
+    --background-color: #FFFFFF;
+    --border-color: #E0E0E0;
+    --success-color: #4CAF50;
+    --error-color: #FF5252;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    background-color: var(--background-color);
+    color: var(--bee-black);
+    line-height: 1.5;
+    font-size: 14px;
+    margin-left: 260px;
+}
+
+.settings-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.8rem;
+    background-color: var(--light-yellow);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+.settings-section {
+    background-color: var(--background-color);
+    border-radius: 4px;
+    padding: 1.3rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--border-color);
+}
+
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 13px;
+    margin-bottom: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color);
+    font-family: 'Playfair Display', serif;
+}
+
+button {
+    background-color: var(--honey-gold);
+    color: var(--bee-black);
+    border: none;
+    font-size: 13px;
+    padding: 0.6rem 1.3rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Playfair Display', serif;
+}
+
+button:hover {
+    background-color: var(--hive-wood);
+}
+
+.message-box {
+    padding: 0.8rem;
+    margin-top: 1rem;
+    font-size: 13px;
+    border-radius: 4px;
+    font-family: 'Playfair Display', serif;
+}
+
+.message-box.error {
+    background-color: var(--error-color);
+    color: var(--background-color);
+}
+
+.message-box.success {
+    background-color: var(--success-color);
+    color: var(--background-color);
+}
+
+.theme-btn {
+    font-size: 13px;
+    margin-right: 0.8rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.theme-btn.light {
+    background-color: var(--background-color);
+    color: var(--bee-black);
+    border: 1px solid var(--border-color);
+}
+
+.theme-btn.default {
+    background-color: var(--honey-gold);
+    color: var(--bee-black);
+}
+
+.followers-following {
+    font-size: 13px;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.8rem;
+    margin-top: 0.8rem;
+    font-family: 'Playfair Display', serif;
+}
+
+#delete-account-link {
+    font-size: 13px;
+    color: var(--error-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#confirmation-modal {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#overlay {
+    background: rgba(255, 165, 0, 0.2);
+}
+
+/* Bee animation */
+@keyframes fly {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-5px) rotate(-5deg); }
+    75% { transform: translateY(5px) rotate(5deg); }
+}
+
+.settings-container::before,
+.settings-container::after {
+    content: "🐝";
+    font-size: 1.4rem;
+    position: absolute;
+    opacity: 0.5;
+    animation: fly 10s infinite ease-in-out;
+}
+
+.settings-container::before {
+    top: 20px;
+    right: 20px;
+    animation-delay: 0s;
+}
+
+.settings-container::after {
+    bottom: 20px;
+    left: 20px;
+    animation-delay: 5s;
+}
+
+/* Honeycomb background */
+.settings-container {
+    background-image: linear-gradient(120deg, var(--light-yellow) 25%, var(--bee-stripe) 25%, var(--bee-stripe) 50%, var(--light-yellow) 50%, var(--light-yellow) 75%, var(--bee-stripe) 75%, var(--bee-stripe) 100%);
+    background-size: 40px 40px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 1rem;
+    }
+
+    .settings-section {
+        padding: 1rem;
+    }
+
+    body {
+        font-size: 13px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+}
+
+/* Subtle hover effects */
+input[type="password"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--honey-gold);
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.2);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.4);
+}
+
+/* Smooth transitions */
+button,
+input,
+.followers-following,
+#delete-account-link {
+    transition: all 0.3s ease;
+}
+
+/* Improve readability */
+label {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--bee-black);
+    font-family: 'Playfair Display', serif;
+}
+
+/* Add some spacing */
+br {
+    display: none;
+}
+
+form > * + * {
+    margin-top: 0.8rem;
+}
+.sidebar {
+    font-size: 13px;
+}
+
+.sidebar a {
+    font-size: 13px;
+}
+.followers-following {
+    display: none; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

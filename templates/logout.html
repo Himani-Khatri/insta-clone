@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Confirmation</title>
+    <link rel="stylesheet" href="/static/logout_{{ session.get('theme', 'default') }}.css">
+</head>
+<body data-theme="{{ session.get('theme', 'default') }}">
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to logout?</p>
+            <div class="modal-buttons">
+                <form action="{{ url_for('logout_page') }}" method="POST">
+                    <button type="submit" class="confirm-button">Yes</button>
+                </form>
+                <button id="cancel-btn" class="cancel-button">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/logout.js"></script>
+</body>
+</html>
