@@ -33,22 +33,24 @@ from flask_wtf.csrf import CSRFProtect
 
 
 import os
-from flask import Flask
+from flask import Flask, send_from_directory, session, redirect, url_for, request, make_response
 from flask_login import LoginManager, UserMixin
 
 # -----------------------------
 # Define paths
 # -----------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))           # backend folder
-FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")        # go up 1 level, then frontend
+FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")        # frontend folder
+TEMPLATES_DIR = os.path.join(FRONTEND_DIR, "templates")       # frontend/templates
+STATIC_DIR = os.path.join(FRONTEND_DIR, "static")             # frontend/static
 
 # -----------------------------
 # Initialize Flask app
 # -----------------------------
 app = Flask(
     __name__,
-    template_folder=os.path.join(FRONTEND_DIR, "templates"),   # frontend/templates
-    static_folder=os.path.join(FRONTEND_DIR, "static")         # frontend/static
+    template_folder=TEMPLATES_DIR,  # not using render_template, but keeps folder reference
+    static_folder=STATIC_DIR
 )
 
 # -----------------------------
@@ -60,26 +62,16 @@ login_manager.init_app(app)
 app.config['SESSION_TYPE'] = 'filesystem'
 login_manager.login_view = "login_page" 
 
-UPLOAD_FOLDER = os.path.join(FRONTEND_DIR, "static/uploads")
+UPLOAD_FOLDER = os.path.join(STATIC_DIR, "uploads")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'avi', 'mov', 'mkv', 'webm', 'wav', 'mp3', 'ogg'}
 
-# -----------------------------
-# Dummy users (optional)
-# -----------------------------
-users = {"user1": {"password": "password123", "phone_number": "1234567890", "followers": ["user2"], "following": ["user3"]}}
 
-# -----------------------------
-# User class for Flask-Login
-# -----------------------------
 class User(UserMixin):
     def __init__(self, id):
         self.id = id
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User(user_id)
 
 
 
@@ -382,7 +374,7 @@ def login_page():
     
     username_from_cookie = request.cookies.get('username')
 
-    return render_template('login.html', error=error, username=username_from_cookie)
+    return render_template('index.html', error=error, username=username_from_cookie)
 
 from flask import send_file
 
@@ -397,14 +389,7 @@ def verify_user_identity():
     # You can add more sophisticated checks here, such as verifying against a database
     return session['username']
 
-# @app.route('/api/converse', methods=['POST'])
-# def converse():
-#     if 'username' not in session:
-#         return jsonify({'error': 'Unauthorized'}), 401
 
-#     user_id = session['user_id']
-#     mode = request.args.get('mode', 'text')
-    
     # try:
     #     if mode == 'audio':
     #         audio_file = request.files['audio']
