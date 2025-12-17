@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sidebar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="/static/sidebar_{{ session.get('theme', 'default') }}.css">
+    <link rel="stylesheet" href="/static/css/sidebar_{{ session.get('theme', 'default') }}.css">
 </head>
 <body data-theme="{{ session.get('theme', 'default') }}">
     <div class="sidebar">
@@ -57,7 +57,7 @@
     <div id="recognized-text" class="recognized-text"></div>
     <div id="message-box1" class="message-box1"></div>
 
-    <script src="/static/sidebar.js"></script>
-    <script src="/static/logout.js"></script>
+    <script src="/static/js/sidebar.js"></script>
+    <script src="/static/js/logout.js"></script>
 </body>
 </html>

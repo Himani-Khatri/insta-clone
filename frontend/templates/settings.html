@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="/static/settings_{{ session.get('theme', 'default') }}.css">
+    <link rel="stylesheet" href="/static/css/settings_{{ session.get('theme', 'default') }}.css">
     
 </head>
 <body data-theme="{{ session.get('theme', 'default') }}">
@@ -209,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
         </script>
 
 </body>
-<script></script>
 <style>
     /* Confirmation Modal Styles */
 #confirmation-modal {

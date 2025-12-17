@@ -6,7 +6,7 @@
     <title>Create Post</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/post_{{ session.get('theme', 'default') }}.css">
+    <link rel="stylesheet" href="/static/css/post_{{ session.get('theme', 'default') }}.css">
 </head>
 <body data-theme="{{ session.get('theme', 'default') }}">
     {% include 'sidebar.html' %}
@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <script src="/static/post.js"></script>
+    <script src="/static/js/post.js"></script>
 
 
 
