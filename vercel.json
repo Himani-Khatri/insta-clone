@@ -1,7 +1,7 @@
 {
   "version": 2,
   "builds": [
-    { "src": "backend/app.py", "use": "@vercel/python", "config": { "pythonVersion": "3.12" } }
+    { "src": "backend/app.py", "use": "@vercel/python", "config": { "pythonVersion": "3.14" } }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "backend/app.py" }
