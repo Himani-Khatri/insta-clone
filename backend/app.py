@@ -7,44 +7,54 @@ from dateutil import parser
 from flask import g
 import time
 import speech_recognition as sr
-from flask_login import current_user, LoginManager, UserMixin
+from flask_login import current_user
 from werkzeug.security import check_password_hash
+from flask_login import LoginManager
+from flask_login import UserMixin
+from flask_login import current_user
+# from bee_intelligence import BeeAI, VoiceRecognizer, TTSEngine
 from flask_wtf.csrf import CSRFProtect
-from mangum import Mangum  # Serverless adapter
+# import os
+# from flask import Flask
+from mangum import Mangum
 
-# -----------------------------
-# Define paths
-# -----------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))           # backend folder
-FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")        # frontend folder
-TEMPLATES_DIR = os.path.join(FRONTEND_DIR, "templates")       # frontend/templates
-STATIC_DIR = os.path.join(FRONTEND_DIR, "static")             # frontend/static
 
-# -----------------------------
-# Initialize Flask app
-# -----------------------------
+
+
+
+import os
+from flask import Flask, send_from_directory, session, redirect, url_for, request, make_response
+from flask_login import LoginManager, UserMixin
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend")
+TEMPLATES_DIR = os.path.join(FRONTEND_DIR, "templates")
+STATIC_DIR = os.path.join(FRONTEND_DIR, "static")
+
 app = Flask(
     __name__,
     template_folder=TEMPLATES_DIR,
     static_folder=STATIC_DIR
 )
+handler = Mangum(app)
 
+if __name__ == "__main__":
+    app.run()
 # -----------------------------
-# Setup Flask-Login and CSRF
+# Configurations
 # -----------------------------
-app.secret_key = "mysecretkey1234"
+app.secret_key = 'mysecretkey1234'
 login_manager = LoginManager()
 login_manager.init_app(app)
-csrf = CSRFProtect(app)
-
+app.config['SESSION_TYPE'] = 'filesystem'
+login_manager.login_view = "login_page" 
 
 UPLOAD_FOLDER = os.path.join(STATIC_DIR, "uploads")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'avi', 'mov', 'mkv', 'webm', 'wav', 'mp3', 'ogg'}
 
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
 class User(UserMixin):
     def __init__(self, id):

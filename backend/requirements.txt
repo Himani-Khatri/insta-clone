@@ -1,4 +1,7 @@
-flask>=2.3,<3.0
-Flask-Login==0.6.2
-python-dateutil==2.8.2
+Flask==2.3.4
+Flask-Login==0.6.3
+Flask-WTF==1.1.1
 Werkzeug==2.3.8
+python-dateutil==2.8.2
+speechrecognition==3.9.0
+Mangum==0.15.0
