@@ -43,11 +43,7 @@ app = Flask(
 )
 
 
-handler = Mangum(app)
-event = {"httpMethod": "GET", "path": "/"}
-context = {}
-response = handler(event, context)
-print(response)
+
 # -----------------------------
 # Configurations
 # -----------------------------
@@ -2451,5 +2447,4 @@ def accept_request(username):
     return redirect(url_for('messages_page'))
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+handler = Mangum(app)
