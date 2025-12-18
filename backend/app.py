@@ -7,34 +7,10 @@ from dateutil import parser
 from flask import g
 import time
 import speech_recognition as sr
-from flask_login import current_user
+from flask_login import current_user, LoginManager, UserMixin
 from werkzeug.security import check_password_hash
-from flask_login import LoginManager
-from flask_login import UserMixin
-from flask_login import current_user
-# from bee_intelligence import BeeAI, VoiceRecognizer, TTSEngine
 from flask_wtf.csrf import CSRFProtect
-# import os
-# from flask import Flask
-
-app = Flask(__name__)
-
-# # your existing routes are here
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
-
-
-# bee_ai = BeeAI()
-# voice_recognizer = VoiceRecognizer()
-# tts_engine = TTSEngine()
-
-
-
-import os
-from flask import Flask, send_from_directory, session, redirect, url_for, request, make_response
-from flask_login import LoginManager, UserMixin
+from mangum import Mangum  # Serverless adapter
 
 # -----------------------------
 # Define paths
@@ -49,18 +25,18 @@ STATIC_DIR = os.path.join(FRONTEND_DIR, "static")             # frontend/static
 # -----------------------------
 app = Flask(
     __name__,
-    template_folder=TEMPLATES_DIR,  # not using render_template, but keeps folder reference
+    template_folder=TEMPLATES_DIR,
     static_folder=STATIC_DIR
 )
 
 # -----------------------------
-# Configurations
+# Setup Flask-Login and CSRF
 # -----------------------------
-app.secret_key = 'mysecretkey1234'
+app.secret_key = "mysecretkey1234"
 login_manager = LoginManager()
 login_manager.init_app(app)
-app.config['SESSION_TYPE'] = 'filesystem'
-login_manager.login_view = "login_page" 
+csrf = CSRFProtect(app)
+
 
 UPLOAD_FOLDER = os.path.join(STATIC_DIR, "uploads")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
