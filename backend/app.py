@@ -19,6 +19,10 @@ from flask_wtf.csrf import CSRFProtect
 from mangum import Mangum
 
 
+# Simulate an AWS Lambda event
+
+
+
 
 
 
@@ -37,8 +41,13 @@ app = Flask(
     template_folder=TEMPLATES_DIR,
     static_folder=STATIC_DIR
 )
-handler = Mangum(app)
 
+
+handler = Mangum(app)
+event = {"httpMethod": "GET", "path": "/"}
+context = {}
+response = handler(event, context)
+print(response)
 # -----------------------------
 # Configurations
 # -----------------------------
